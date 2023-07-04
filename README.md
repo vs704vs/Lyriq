@@ -1,10 +1,10 @@
 ## LYRIQ
 http://lyriq.vercel.app/
 
-### Install packages
+#### Install packages
 npm i
 
-### Setup .env file
+#### Setup .env file
 DATABASE_URL=
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
@@ -12,8 +12,8 @@ GITHUB_ID=
 GITHUB_SECRET=
 NEXTAUTH_SECRET=
 
-### Setup Prisma
+#### Setup Prisma
 npx prisma db push
 
-###Start the app
+#### Start the app
 npm run dev

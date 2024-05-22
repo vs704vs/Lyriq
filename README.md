@@ -2,7 +2,7 @@
 # Lyriq
 
 Platform for music enthusiasts to share collaborate and promote their  work. 
-Reservation/Booking system for msic studios, vocal coaches, artists, instruments for rent.
+Reservation/Booking system for music studios, vocal coaches, artists, instruments for rent.
 Property creation and session reservation/cancellation involving date, time, venue, equiments and mic setup. 
 
 ## Demo

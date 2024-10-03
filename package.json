@@ -49,3 +49,103 @@
     "tailwindcss": "^3.2.7"
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useState } from 'react';
+import './docsTable.scss';
+import { IFolderContents } from '../../../../store/documentation/types';
+
+interface DocsTableProps {
+  currentFolderPath: string;
+  additionalFolderPath: string;
+  docsFilesList: IFolderContents;
+}
+
+const DocsTable: React.FC<DocsTableProps> = ({ currentFolderPath, additionalFolderPath, docsFilesList }) => {
+  const [renderedFilesList, setRenderedFilesList] = useState<IFolderContents | null>(null);
+
+  useEffect(() => {
+    // Log the data when it's updated and ensure that setRenderedFilesList updates the UI.
+    console.log('docsFilesList:', docsFilesList);
+    if (docsFilesList && (docsFilesList.files.length || docsFilesList.folders.length)) {
+      setRenderedFilesList(docsFilesList);
+    }
+  }, [docsFilesList]);
+
+  if (!renderedFilesList) {
+    // Display a loading or empty state until the data is available
+    return <div>Loading files...</div>;
+  }
+
+  return (
+    <div>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div
+          className="icon icon-xsm"
+          style={{
+            margin: 0,
+            paddingInline: '10px',
+            paddingBlock: '8px',
+            alignContent: 'center',
+            border: additionalFolderPath ? '2px solid #e3e3e3' : '2px solid #bfbfbf',
+            color: additionalFolderPath ? '#e3e3e3' : 'black',
+          }}
+        >
+          arrow_back
+        </div>
+        <div style={{ fontWeight: 600, fontSize: '14px', marginLeft: '20px', display: 'flex' }}>
+          <div style={{ color: '#66777A', marginRight: '5px' }}>
+            {currentFolderPath.substring(currentFolderPath.lastIndexOf('\\') + 1)}
+          </div>
+          {additionalFolderPath && <div>{additionalFolderPath.replaceAll('\\', '/')}</div>}
+        </div>
+      </div>
+
+      <div className="table-container">
+        <table className="table table-striped" style={{ position: 'relative' }}>
+          <thead>
+            <tr className="table-row table-header">
+              <th scope="col" className="table-header" style={{ paddingRight: '150px' }}>Name</th>
+              <th scope="col" className="table-header" style={{ paddingRight: '60px' }}>Type</th>
+              <th scope="col" className="table-header" style={{ paddingRight: '50px' }}>Date Modified</th>
+              <th scope="col" className="table-header">Size</th>
+              <th scope="col" className="table-header" style={{ textAlign: 'end', paddingRight: '20px' }}>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {renderedFilesList.folders && renderedFilesList.folders.map((folder) => (
+              <tr key={folder.name}>
+                <td>icon {folder.name}</td>
+                <td>File folder</td>
+                <td>{folder.modifiedDate}</td>
+                <td>{folder.size} Ko</td>
+                <td style={{ textAlign: 'end' }}>icon1 icon2</td>
+              </tr>
+            ))}
+
+            {renderedFilesList.files && renderedFilesList.files.length > 0 && renderedFilesList.files.map((file) => (
+              <tr key={file.name}>
+                <td>icon {file.name}</td>
+                <td>{file.type}</td>
+                <td>{file.modifiedDate}</td>
+                <td>{file.size} Ko</td>
+                <td style={{ textAlign: 'end' }}>icon1 icon2</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default DocsTable;
